@@ -18,6 +18,14 @@ on:
   schedule:
     # Run daily at 2 AM UTC for cron jobs
     - cron: '0 2 * * *'
+  workflow_call:
+    inputs:
+      environment:
+        required: true
+        type: string
+    secrets:
+      GH_TOKEN:
+        required: false
 
 # Global environment variables
 env:
@@ -180,4 +188,5 @@ jobs:
           echo "- Processor Pipeline: ${{ needs.dotnet-processor-pipeline.result }}" >> $GITHUB_STEP_SUMMARY
           echo "- Cron Pipeline: ${{ needs.dotnet-cron-pipeline.result }}" >> $GITHUB_STEP_SUMMARY
           echo "- NuGet Pipeline: ${{ needs.nuget-pipeline.result }}" >> $GITHUB_STEP_SUMMARY
+
           echo "- Generic Build: ${{ needs.generic-build-pipeline.result }}" >> $GITHUB_STEP_SUMMARY
